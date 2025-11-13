@@ -5,7 +5,7 @@
 void ai(int intelligence){
     mathlib();
     #ifdef NDEBUG
-    std::cout << "ai/" << PKG_VERSION << ": Some IMPROVEED Artificial Intelligence for aliens (Release)!\n";
+    std::cout << "ai/" << PKG_VERSION << ": Some Artificial Intelligence for aliens (Release)!\n";
     #else
     std::cout << "ai/" << PKG_VERSION << ": Some Artificial Intelligence for aliens (Debug)!\n";
     #endif
