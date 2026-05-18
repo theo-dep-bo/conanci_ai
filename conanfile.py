@@ -1,12 +1,19 @@
+import os
+import re
 from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMakeDeps, CMake, cmake_layout
+from conan.tools.files import load
 from conan.tools.scm import Git
 
 
 class aiRecipe(ConanFile):
     name = "ai"
-    version = "1.0"
     requires = "mathlib/[>=1.0 <2]"
+
+    def set_version(self):
+        content = load(self, os.path.join(self.recipe_folder, "CMakeLists.txt"))
+        version = re.search(r"project\([^)]*VERSION\s+([\d.]+)", content)
+        self.version = version.group(1)
 
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
@@ -26,7 +33,6 @@ class aiRecipe(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.preprocessor_definitions["PKG_VERSION"] = f'"{self.version}"'
         tc.generate()
         deps = CMakeDeps(self)
         deps.generate()
