@@ -1,0 +1,30 @@
+# Azure Pipelines for the ai Conan package.
+# The full pipeline definition lives in conanci_conf/.azure-pipelines/package-pipeline.yml
+# and is shared between all package repos.
+
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+resources:
+  repositories:
+    - repository: github-package
+      type: github
+      name: theo-dep-bo/conanci_ai
+      endpoint: github-theo-dep-bo
+    - repository: conf
+      type: github
+      name: theo-dep-bo/conanci_conf
+      ref: refs/heads/main
+      endpoint: github-theo-dep-bo
+
+extends:
+  template: .azure-pipelines/package-pipeline.yml@conf
+  parameters:
+    packageName: ai
